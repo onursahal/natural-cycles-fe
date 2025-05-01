@@ -1,11 +1,11 @@
-<main class="h-full">
+<main class="h-full flex flex-col justify-center">
   @if (title()) {
   <app-title type="title" inputTitle="{{ title() }}" />
   } @if (countdownString()) {
   <app-title type="countdown" inputTitle="{{ countdownString() }}" />
   }
 
-  <div class="flex gap-[24px] justify-center mt-[32px]">
+  <div class="flex gap-[24px] justify-center mt-[32px] flex-wrap">
     <app-textinput title="Title" [(onInputChange)]="title" [value]="title()" />
     <app-textinput
       title="End Date"
