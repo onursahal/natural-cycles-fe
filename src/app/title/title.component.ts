@@ -5,7 +5,7 @@ import {
   input,
   signal,
   ViewChild,
-} from '@angular/core';
+} from '@angular/core'
 
 @Component({
   selector: 'app-title',
@@ -17,66 +17,66 @@ import {
   },
 })
 export class TitleComponent {
-  inputTitle = input.required<string>();
-  type = input<'countdown' | 'title'>('title');
-  titleFontSize = signal(0);
-  scrollWidth = signal(0);
-  windowWidth = signal(0);
+  inputTitle = input.required<string>()
+  type = input<'countdown' | 'title'>('title')
+  titleFontSize = signal(0)
+  scrollWidth = signal(0)
+  windowWidth = signal(0)
 
-  @ViewChild('title') title!: ElementRef;
+  @ViewChild('title') title!: ElementRef
 
   constructor() {}
 
   private getActualWindowWidth(): number {
-    return (window.visualViewport?.width || window.innerWidth) - 48;
+    return (window.visualViewport?.width || window.innerWidth) - 48
   }
 
   private adjustFontSize() {
-    const titleElement = this.title.nativeElement;
-    this.scrollWidth.set(titleElement.scrollWidth);
-    this.windowWidth.set(this.getActualWindowWidth());
+    const titleElement = this.title.nativeElement
+    this.scrollWidth.set(titleElement.scrollWidth)
+    this.windowWidth.set(this.getActualWindowWidth())
     while (this.scrollWidth() > this.windowWidth()) {
       if (this.titleFontSize() <= 1) {
-        break;
+        break
       }
-      this.titleFontSize.set(this.titleFontSize() - 1);
+      this.titleFontSize.set(this.titleFontSize() - 1)
       this.title.nativeElement.setAttribute(
         'style',
-        `font-size: ${this.titleFontSize()}px`
-      );
-      this.scrollWidth.set(titleElement.scrollWidth);
-      this.windowWidth.set(this.getActualWindowWidth());
+        `font-size: ${this.titleFontSize()}px`,
+      )
+      this.scrollWidth.set(titleElement.scrollWidth)
+      this.windowWidth.set(this.getActualWindowWidth())
     }
     while (this.scrollWidth() <= this.windowWidth()) {
-      this.titleFontSize.set(this.titleFontSize() + 1);
+      this.titleFontSize.set(this.titleFontSize() + 1)
       this.title.nativeElement.setAttribute(
         'style',
-        `font-size: ${this.titleFontSize()}px`
-      );
-      this.scrollWidth.set(titleElement.scrollWidth);
-      this.windowWidth.set(this.getActualWindowWidth());
+        `font-size: ${this.titleFontSize()}px`,
+      )
+      this.scrollWidth.set(titleElement.scrollWidth)
+      this.windowWidth.set(this.getActualWindowWidth())
     }
     if (this.titleFontSize() <= 1) {
-      return;
+      return
     }
-    this.titleFontSize.set(this.titleFontSize() - 1);
+    this.titleFontSize.set(this.titleFontSize() - 1)
     this.title.nativeElement.setAttribute(
       'style',
-      `font-size: ${this.titleFontSize()}px`
-    );
+      `font-size: ${this.titleFontSize()}px`,
+    )
   }
 
   ngAfterViewInit() {
-    this.adjustFontSize();
+    this.adjustFontSize()
   }
 
   ngAfterViewChecked() {
-    this.adjustFontSize();
+    this.adjustFontSize()
   }
 
   onWindowResize(event: any) {
     requestAnimationFrame(() => {
-      this.adjustFontSize();
-    });
+      this.adjustFontSize()
+    })
   }
 }

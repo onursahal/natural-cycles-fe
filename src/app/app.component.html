@@ -1,8 +1,9 @@
 <main class="h-full flex flex-col justify-center">
   @if (title()) {
-  <app-title type="title" inputTitle="{{ title() }}" />
-  } @if (countdownString()) {
-  <app-title type="countdown" inputTitle="{{ countdownString() }}" />
+    <app-title type="title" inputTitle="{{ title() }}" />
+  }
+  @if (countdownString()) {
+    <app-title type="countdown" inputTitle="{{ countdownString() }}" />
   }
 
   <div class="flex gap-[24px] justify-center mt-[32px] flex-wrap">
