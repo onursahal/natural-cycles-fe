@@ -1,11 +1,4 @@
-import {
-  Component,
-  effect,
-  ElementRef,
-  input,
-  signal,
-  ViewChild,
-} from '@angular/core'
+import { Component, ElementRef, input, signal, ViewChild } from '@angular/core'
 
 @Component({
   selector: 'app-title',
@@ -28,55 +21,50 @@ export class TitleComponent {
   constructor() {}
 
   private getActualWindowWidth(): number {
-    return (window.visualViewport?.width || window.innerWidth) - 48
+    return window.innerWidth - 48
   }
 
-  private adjustFontSize() {
-    const titleElement = this.title.nativeElement
-    this.scrollWidth.set(titleElement.scrollWidth)
-    this.windowWidth.set(this.getActualWindowWidth())
-    while (this.scrollWidth() > this.windowWidth()) {
-      if (this.titleFontSize() <= 1) {
-        break
+  private adjustFontSizeToFullWidthText(titleElement: HTMLElement) {
+    const maxFontSize = 1000
+    const minFontSize = 1
+    const targetWidth = this.getActualWindowWidth()
+
+    const testFontSize = (fontSize: number) => {
+      titleElement.style.fontSize = `${fontSize}px`
+      return titleElement.scrollWidth
+    }
+
+    let low = minFontSize
+    let high = maxFontSize
+    let bestFit = minFontSize
+
+    while (low <= high) {
+      const mid = Math.floor((low + high) / 2)
+      const currentWidth = testFontSize(mid)
+
+      if (currentWidth <= targetWidth) {
+        bestFit = mid
+        low = mid + 1
+      } else {
+        high = mid - 1
       }
-      this.titleFontSize.set(this.titleFontSize() - 1)
-      this.title.nativeElement.setAttribute(
-        'style',
-        `font-size: ${this.titleFontSize()}px`,
-      )
-      this.scrollWidth.set(titleElement.scrollWidth)
-      this.windowWidth.set(this.getActualWindowWidth())
     }
-    while (this.scrollWidth() <= this.windowWidth()) {
-      this.titleFontSize.set(this.titleFontSize() + 1)
-      this.title.nativeElement.setAttribute(
-        'style',
-        `font-size: ${this.titleFontSize()}px`,
-      )
-      this.scrollWidth.set(titleElement.scrollWidth)
-      this.windowWidth.set(this.getActualWindowWidth())
-    }
-    if (this.titleFontSize() <= 1) {
-      return
-    }
-    this.titleFontSize.set(this.titleFontSize() - 1)
-    this.title.nativeElement.setAttribute(
-      'style',
-      `font-size: ${this.titleFontSize()}px`,
-    )
+
+    this.titleFontSize.set(bestFit)
+    titleElement.style.fontSize = `${bestFit}px`
   }
 
   ngAfterViewInit() {
-    this.adjustFontSize()
+    this.adjustFontSizeToFullWidthText(this.title.nativeElement)
   }
 
   ngAfterViewChecked() {
-    this.adjustFontSize()
+    this.adjustFontSizeToFullWidthText(this.title.nativeElement)
   }
 
   onWindowResize(event: any) {
     requestAnimationFrame(() => {
-      this.adjustFontSize()
+      this.adjustFontSizeToFullWidthText(this.title.nativeElement)
     })
   }
 }
