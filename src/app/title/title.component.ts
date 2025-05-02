@@ -1,4 +1,5 @@
 import { Component, ElementRef, input, signal, ViewChild } from '@angular/core'
+import { FontSizeService } from '../services/font-size.service'
 
 @Component({
   selector: 'app-title',
@@ -16,55 +17,31 @@ export class TitleComponent {
   scrollWidth = signal(0)
   windowWidth = signal(0)
 
-  @ViewChild('title') title!: ElementRef
+  @ViewChild('title') titleElement!: ElementRef
 
-  constructor() {}
+  constructor(private fontSizeService: FontSizeService) {}
 
-  private getActualWindowWidth(): number {
-    return window.innerWidth - 48
-  }
-
-  private adjustFontSizeToFullWidthText(titleElement: HTMLElement) {
-    const maxFontSize = 1000
-    const minFontSize = 1
-    const targetWidth = this.getActualWindowWidth()
-
-    const testFontSize = (fontSize: number) => {
-      titleElement.style.fontSize = `${fontSize}px`
-      return titleElement.scrollWidth
-    }
-
-    let low = minFontSize
-    let high = maxFontSize
-    let bestFit = minFontSize
-
-    while (low <= high) {
-      const mid = Math.floor((low + high) / 2)
-      const currentWidth = testFontSize(mid)
-
-      if (currentWidth <= targetWidth) {
-        bestFit = mid
-        low = mid + 1
-      } else {
-        high = mid - 1
-      }
-    }
-
-    this.titleFontSize.set(bestFit)
-    titleElement.style.fontSize = `${bestFit}px`
+  private adjustFontSize() {
+    const titleElement = this.titleElement.nativeElement
+    const targetWidth = this.fontSizeService.getWindowWidth(48)
+    const fontSize = this.fontSizeService.adjustFontSizeToWidth(
+      titleElement,
+      targetWidth,
+    )
+    titleElement.style.fontSize = `${fontSize}px`
   }
 
   ngAfterViewInit() {
-    this.adjustFontSizeToFullWidthText(this.title.nativeElement)
+    this.adjustFontSize()
   }
 
   ngAfterViewChecked() {
-    this.adjustFontSizeToFullWidthText(this.title.nativeElement)
+    this.adjustFontSize()
   }
 
   onWindowResize() {
     requestAnimationFrame(() => {
-      this.adjustFontSizeToFullWidthText(this.title.nativeElement)
+      this.adjustFontSize()
     })
   }
 }
