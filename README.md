@@ -1,6 +1,6 @@
 # Natural Cycles Frontend Challenge – Countdown App
 
-This is my solution to the Natural Cycles frontend challenge. The application is a responsive countdown timer built with Angular and TypeScript. Users can set a custom event name and end date, and the app will display the remaining time using the full screen width with the largest possible font size in a single line.
+This is my solution to the Natural Cycles frontend challenge. The application is a responsive countdown timer built with Angular and TypeScript. Users can set a custom event name and end date, and the app will display the remaining time and event title using the full screen width with the largest possible font size in a single line.
 
 ## 🛠 Setup Instructions
 
