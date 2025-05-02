@@ -62,7 +62,7 @@ export class TitleComponent {
     this.adjustFontSizeToFullWidthText(this.title.nativeElement)
   }
 
-  onWindowResize(event: any) {
+  onWindowResize() {
     requestAnimationFrame(() => {
       this.adjustFontSizeToFullWidthText(this.title.nativeElement)
     })

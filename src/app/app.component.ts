@@ -1,4 +1,4 @@
-import { Component, computed, effect, input, signal } from '@angular/core'
+import { Component, computed, effect, signal } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
 import { TitleComponent } from './title/title.component'
 import { TextinputComponent } from './textinput/textinput.component'
@@ -8,6 +8,7 @@ import { interval } from 'rxjs'
   selector: 'app-root',
   imports: [RouterOutlet, TitleComponent, TextinputComponent],
   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = signal<string>(localStorage.getItem('title') || '')

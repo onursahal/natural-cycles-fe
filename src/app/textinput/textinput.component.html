@@ -1,28 +1,24 @@
-<div>
-  <div class="relative">
-    <span class="absolute top-[-14px] left-[12px] bg-white p-1 text-sm">{{
-      title()
-    }}</span>
+<div class="input-container">
+  <span class="input-title">{{ title() }}</span>
 
-    @if (type() === 'countdown') {
-      <input
-        type="text"
-        class="rounded-sm border-1 border-[#757575] pt-[18px] pb-[15px] px-[11px] w-[278px]"
-        (click)="onFocus()"
-        [matDatepicker]="picker"
-        (dateChange)="onChange($event)"
-        [min]="minDate"
-        [defaultValue]="formattedDate() || ''"
-      />
-    }
-    @if (type() === 'title') {
-      <input
-        type="text"
-        class="rounded-sm border-1 border-[#757575] pt-[18px] pb-[15px] px-[11px] w-[278px]"
-        (input)="onChange($event)"
-        [value]="value()"
-      />
-    }
-    <mat-datepicker #picker></mat-datepicker>
-  </div>
+  @if (type() === 'countdown') {
+    <input
+      type="text"
+      class="rounded-input"
+      (click)="onFocus()"
+      [matDatepicker]="picker"
+      (dateChange)="onChange($event)"
+      [min]="minDate"
+      [defaultValue]="formattedDate() || ''"
+    />
+  }
+  @if (type() === 'title') {
+    <input
+      type="text"
+      class="rounded-input"
+      (input)="onChange($event)"
+      [value]="value()"
+    />
+  }
+  <mat-datepicker #picker></mat-datepicker>
 </div>

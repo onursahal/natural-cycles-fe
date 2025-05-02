@@ -9,6 +9,7 @@ import {
 import {
   MatDatepicker,
   MatDatepickerModule,
+  MatDatepickerInputEvent,
 } from '@angular/material/datepicker'
 import { provideNativeDateAdapter } from '@angular/material/core'
 import { formatDate } from '@angular/common'
@@ -39,8 +40,8 @@ export class TextinputComponent {
     this.datePicker.open()
   }
 
-  onChange(event: any) {
-    console.log(event.target.value)
-    this.onInputChange.set(`${event.target.value}`)
+  onChange(event: MatDatepickerInputEvent<Date> | Event) {
+    const input = event.target as HTMLInputElement
+    this.onInputChange.set(`${input.value}`)
   }
 }

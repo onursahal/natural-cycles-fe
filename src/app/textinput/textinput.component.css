@@ -1,0 +1,19 @@
+.input-container {
+  position: relative;
+}
+
+.input-title {
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  background-color: white;
+  padding: 2px;
+  font-size: 12px;
+}
+
+.rounded-input {
+  border-radius: 4px;
+  border: 1px solid #757575;
+  padding: 18px 11px 18px 11px;
+  max-width: 278px;
+}
