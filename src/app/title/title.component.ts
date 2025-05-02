@@ -8,6 +8,7 @@ import { FontSizeService } from '../services/font-size.service'
   styleUrl: './title.component.css',
   host: {
     '(window:resize)': 'onWindowResize($event)',
+    '(window:orientationchange)': 'onWindowResize($event)',
   },
 })
 export class TitleComponent {
